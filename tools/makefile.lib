@@ -1,0 +1,4 @@
+
+CURR_DIR = $(shell pwd)
+test ::; $(PARENTD_TOOLS)/pytester.py --TEST_DIR=$(CURR_DIR)
+

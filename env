@@ -1,0 +1,18 @@
+# -*-sh-*-
+function require {
+  local var
+  local -a missing=()
+  for var in $@; do
+    if ! $(env | grep -q "$var="); then
+      missing+=($var)
+    fi
+  done
+  if [[ "${missing[@]}" ]]; then
+    echo "missing vars: ${missing[@]}";
+    return 1
+  fi
+  return 0
+}
+
+require PARENTD_HOME
+export PARENTD_TOOLS=$PARENTD_HOME/tools
