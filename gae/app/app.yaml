@@ -1,0 +1,29 @@
+application: localhost
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: false  # Fix this!
+
+handlers:
+- url: /favicon\.ico
+  static_files: favicon.ico
+  upload: favicon\.ico
+
+- url: /js
+  static_dir: js
+
+- url: /_ah/spi/.*
+  script: parentd.api
+
+- url: /.*
+  script: parentd.py
+
+libraries:
+- name: webapp2
+  version: latest
+- name: jinja2
+  version: latest
+- name: pycrypto
+  version: latest
+- name: endpoints
+  version: 1.0
