@@ -11,3 +11,6 @@ build ::
 		rm -f $(GAE_CLIENT) ; \
 	fi
 
+
+distro-clean ::; @rm -rf apiclient httplib2 oauth2client uritemplate
+
