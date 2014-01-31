@@ -13,7 +13,7 @@ handlers:
   static_dir: js
 
 - url: /_ah/spi/.*
-  script: parentd.api
+  script: services.api
 
 - url: /.*
   script: parentd.py

@@ -9,3 +9,6 @@ test ::
 	@export PYTHONPATH=$(PYTHONPATH):$(GAE_HOME):$(GAE_LIBS) ; \
 	$(PARENTD_TOOLS)/pytester.py --TEST_DIR=$(CURR_DIR)
 
+%_test.dbgr :: %_test.py
+	(PYTHONPATH=$(PYTHONPATH):$(GAE_HOME):$(GAE_LIBS) \
+		emacs -nw --eval '(pdb "pdb $<")')

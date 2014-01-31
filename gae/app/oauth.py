@@ -1,6 +1,8 @@
 # Description:
 #   Utilities for authorizing http requests.
 
+import endpoints
+
 from google.appengine.api import users
 from google.appengine.ext import ndb
 from httplib2 import Http
@@ -15,11 +17,13 @@ def GetEndpointsUser():
   Returns:
     user: (User) Gets the user struct.
   """
-  user = users.get_current_user()
+  user = endpoints.get_current_user()
+  if not user.user_id():
+    user = users.get_current_user()
   return user
 
 
-def ValidateUser(root_key, needs_super_user=False):
+def ValidateUser(cls, key):
   """Container about how to validate."""
   current_user = GetEndpointsUser()
   # Check that user is allowed in root_key.
@@ -27,10 +31,11 @@ def ValidateUser(root_key, needs_super_user=False):
     raise endpoints.UnauthorizedException('Invalid User!')
 
 
-def IsSuperUser():
-  current_user = GetEndpointsUser()
-  # if needs_super_user; look up user in allowed, store.
-  return True  # for now.
+def IsSuperUser(user_cls):
+  u = user_cls.Find()
+  if not u:
+    return False
+  return u.is_super_user
 
 
 def EndpointsGetAuthorizedHttp():
